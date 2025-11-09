@@ -6,7 +6,7 @@ window.pegasusInit = function() {
                   "amaimon"
                  ];
 
-    const audioSrc = "https://cdn.freesound.org/previews/758/758966_14213757-lq.mp3";
+    const audioSrc = localStorage.getItem("sound") || "https://cdn.freesound.org/previews/758/758966_14213757-lq.mp3";
     let observer;
 
     const requestNotificationPermission = () => {
@@ -89,22 +89,22 @@ window.pegasusDesc = function(column) {
 
 window.pegasusConfig = function(column){
     column.querySelector("#addon-config").innerHTML = `
-    <ul class="hero-options" style="list-style: none; color: black">
-                            <li data-serveroption="1" class="opt_1"><div class="checkbox-custom c-checkbox">
-            <input type="checkbox" id="settings_1" name="settings" value="asd">
-            <label for="settings_1" class="c-checkbox__label">Dźwięk</label>
+    <ul style="list-style: none">
+        <li><div class="checkbox-custom">
+            <input type="checkbox" id="tick-1">
+            <label for="tick-1" class="c-checkbox__label" style="color: #444">Dźwięk</label>
         </div></li>
-                            <li data-serveroption="6" class="opt_6"><div class="checkbox-custom c-checkbox">
-            <input type="checkbox" id="settings_6" name="settings" value="asd">
-            <label for="settings_6" class="c-checkbox__label">Powiadomienia</label>
+        <li><div class="checkbox-custom">
+            <input type="checkbox" id="tick-2">
+            <label for="tick-2" class="c-checkbox__label" style="color: #444">Powiadomienia</label>
         </div></li>
-                            <li data-serveroption="3" class="opt_3"><div class="checkbox-custom c-checkbox">
-            <input type="checkbox" id="settings_3" name="settings" value="asd">
-            <label for="settings_3" class="c-checkbox__label">Podświetlenie</label>
+        <li><div class="checkbox-custom">
+            <input type="checkbox" id="tick-3">
+            <label for="tick-3" class="c-checkbox__label" style="color: #444">Podświetlenie</label>
         </div></li>
-                            <li data-serveroption="5" class="opt_5"><div class="checkbox-custom c-checkbox">
-            <input type="checkbox" id="settings_5" name="settings" value="asd">
-            <label for="settings_5" class="c-checkbox__label">Słownik</label>
+        <li><div class="checkbox-custom">
+            <input type="checkbox" id="tick-4">
+            <label for="tick-4" class="c-checkbox__label" style="color: #444">Słownik</label>
         </div></li>
     </ul>
     `;

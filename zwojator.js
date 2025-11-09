@@ -8,7 +8,7 @@ const createButton = () => {
     Object.assign(widgetButton.style, {
          width: "44px",
         height: "44px",
-        left: "308px",
+        left: `${widgetCount*44}px`,
         position: "absolute",
         display: "flex",
         justifyContent: "center",

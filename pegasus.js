@@ -89,28 +89,47 @@ window.pegasusDesc = function(column) {
 
 window.pegasusConfig = function(column){
     column.querySelector("#addon-config").innerHTML = `
-        <ul class="hero-options">
-            <li><div class="checkbox-custom c-checkbox>
-                <input type="checkbox" id="settings-1" name="settings" value="asd">
-                <label for="settings-1" class="c-checkbox__label">Dźwięk</label>
-            </div></li>
-            <li><div class="checkbox-custom c-checkbox>
-                <input type="checkbox" id="settings-2" name="settings" value="asd">
-                <label for="settings-2" class="c-checkbox__label">Powiadomienia</label>
-            </div></li>
-            <li><div class="checkbox-custom c-checkbox>
-                <input type="checkbox" id="settings-3" name="settings" value="asd">
-                <label for="settings-3" class="c-checkbox__label">Podświetlenie</label>
-            </div></li>
-            <li><div class="checkbox-custom c-checkbox>
-                <input type="checkbox" id="settings-3" name="settings" value="asd">
-                <label for="settings-3" class="c-checkbox__label">Podświetlenie</label>
-            </div></li>
-        </ul>
-        Dźwięk <div class="button small green"><div class="background"></div><div class="label"> ... </div></div>
-               <div class="button small green"><div class="background"></div><div class="label"> ... </div></div> <br />
-        Powiadomienia <div class="button small green"><div class="background"></div><div class="label"> ... </div></div> <br />
-        Podświetlenie <div class="input-wrapper"><input class="add-person default" style="visibility: initial;" placeholder="HTML"></div>
-        Słownik <div class="input-wrapper"><input class="add-person default" style="visibility: initial;" placeholder="Słowa kluczowe"></div>
+    <ul class="hero-options">
+                            <li data-serveroption="1" class="opt_1"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_1" name="settings" value="asd">
+            <label for="settings_1" class="c-checkbox__label">Wiadomości prywatne od nieznajomych</label>
+        </div></li>
+                            <li data-serveroption="6" class="opt_6"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_6" name="settings" value="asd">
+            <label for="settings_6" class="c-checkbox__label">Wiadomości na pocztę od nieznajomych</label>
+        </div></li>
+                            <li data-serveroption="3" class="opt_3"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_3" name="settings" value="asd">
+            <label for="settings_3" class="c-checkbox__label">Zaproszenia do handlu od nieznajomych</label>
+        </div></li>
+                            <li data-serveroption="5" class="opt_5"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_5" name="settings" value="asd">
+            <label for="settings_5" class="c-checkbox__label">Zaproszenia na listę przyjaciół</label>
+        </div></li>
+                            <li data-serveroption="21" class="opt_21"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_21" name="settings" value="asd">
+            <label for="settings_21" class="c-checkbox__label">Informuj o braku miejsca w torbach</label>
+        </div></li>
+                            <li data-serveroption="2" class="opt_2"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_2" name="settings" value="asd">
+            <label for="settings_2" class="c-checkbox__label">Zaproszenia do klanu i zgłoszenia dyplomacji</label>
+        </div></li>
+                            <li data-serveroption="14" class="opt_14"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_14" name="settings" value="asd">
+            <label for="settings_14" class="c-checkbox__label">Zaproszenia do drużyn spoza przyjaciół, klanu i sojuszników klanowych</label>
+        </div></li>
+                            <li data-serveroption="9" class="opt_9"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_9" name="settings" value="asd">
+            <label for="settings_9" class="c-checkbox__label">Informuj o logowaniu się klanowiczów</label>
+        </div></li>
+                            <li data-serveroption="15" class="opt_15"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_15" name="settings" value="asd">
+            <label for="settings_15" class="c-checkbox__label">Informuj o logowaniu przyjaciół</label>
+        </div></li>
+                            <li data-serveroption="18" class="opt_18"><div class="checkbox-custom c-checkbox">
+            <input type="checkbox" id="settings_18" name="settings" value="asd">
+            <label for="settings_18" class="c-checkbox__label">Informuj o dołączeniu/opuszczeniu grupy</label>
+        </div></li>
+                        </ul>
     `;
 }

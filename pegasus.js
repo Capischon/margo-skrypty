@@ -89,6 +89,24 @@ window.pegasusDesc = function(column) {
 
 window.pegasusConfig = function(column){
     column.querySelector("#addon-config").innerHTML = `
+        <ul class="hero-options">
+            <li><div class="checkbox-custom c-checkbox>
+                <input type="checkbox" id="settings-1" name="settings" value="asd">
+                <label for="settings-1" class="c-checkbox__label">Dźwięk</label>
+            </div></li>
+            <li><div class="checkbox-custom c-checkbox>
+                <input type="checkbox" id="settings-2" name="settings" value="asd">
+                <label for="settings-2" class="c-checkbox__label">Powiadomienia</label>
+            </div></li>
+            <li><div class="checkbox-custom c-checkbox>
+                <input type="checkbox" id="settings-3" name="settings" value="asd">
+                <label for="settings-3" class="c-checkbox__label">Podświetlenie</label>
+            </div></li>
+            <li><div class="checkbox-custom c-checkbox>
+                <input type="checkbox" id="settings-3" name="settings" value="asd">
+                <label for="settings-3" class="c-checkbox__label">Podświetlenie</label>
+            </div></li>
+        </ul>
         Dźwięk <div class="button small green"><div class="background"></div><div class="label"> ... </div></div>
                <div class="button small green"><div class="background"></div><div class="label"> ... </div></div> <br />
         Powiadomienia <div class="button small green"><div class="background"></div><div class="label"> ... </div></div> <br />

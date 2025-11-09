@@ -4,6 +4,8 @@ let isMenuOnScreen = false;
 
 const createButton = () => {
     const widgetButton = document.createElement("div");widgetButton.className = "widget-button blink-violet";
+    const topLeftWidgetBar = document.querySelector(".top-left.main-buttons-container.ui-droppable.static-widget-position");
+    const widgetCount = topLeftWidgetBar.querySelectorAll(".widget-in-interface-bar").length;
 
     Object.assign(widgetButton.style, {
          width: "44px",

@@ -86,3 +86,13 @@ window.pegasusDesc = function(column) {
         Podświetla znalezione wiadomości i wysyła powiadomienie.
     `;
 };
+
+window.pegasusConfig = function(column){
+    column.querySelector("#addon-config").innerHTML = `
+        Dźwięk <div class="button small green"><div class="background"></div><div class="label"> ... </div></div>
+               <div class="button small green"><div class="background"></div><div class="label"> ... </div></div> <br />
+        Powiadomienia <div class="button small green"><div class="background"></div><div class="label"> ... </div></div> <br />
+        Podświetlenie <div class="input-wrapper"><input class="add-person default" style="visibility: initial;" placeholder="HTML"></div>
+        Słownik <div class="input-wrapper"><input class="add-person default" style="visibility: initial;" placeholder="Słowa kluczowe"></div>
+    `;
+}

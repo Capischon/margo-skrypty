@@ -1,4 +1,4 @@
-window.pegasusInit = function () {
+window.pegasusInit = function() {
 
     const keywords = ["lambo",
                   "sopel",
@@ -78,4 +78,11 @@ window.pegasusInit = function () {
     pegasus();
 
     window.pegasus = pegasus;
-}
+};
+
+window.pegasusDesc = function(column) {
+    column.querySelector("#addon-desc").innerHTML = `
+        Dodatek nasłuchuje czat ogólny w poszukiwaniu podanych słów.<br />
+        Podświetla znalezione wiadomości i wysyła powiadomienie.
+    `;
+};

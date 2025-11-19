@@ -49,14 +49,14 @@ const createMenu = () =>{
 
     isMenuOnScreen = true;
 
-    const menuContainer = document.createElement("div");
-    menuContainer.setAttribute("id", "menuContainer");
-    menuContainer.innerHTML = menuHTML;
+    const zwojatorContainer = document.createElement("div");
+    zwojatorContainer.setAttribute("id", "zwojatorContainer");
+    zwojatorContainer.innerHTML = menuHTML;
 
-    document.querySelector(".alerts-layer").appendChild(menuContainer);
-    menuContainer.querySelector(".close-button").onclick = destroyMenu;
-    menuContainer.querySelector(".search-x").onclick = () => {
-        menuContainer.querySelector(".search").value = "";
+    document.querySelector(".alerts-layer").appendChild(zwojatorContainer);
+    zwojatorContainer.querySelector(".close-button").onclick = destroyMenu;
+    zwojatorContainer.querySelector(".search-x").onclick = () => {
+        zwojatorContainer.querySelector(".search").value = "";
         document.querySelectorAll("#zwojator-container > div:not(.search-wrapper)").forEach(item => {item.style.display = "flex"});
     };
 
@@ -64,7 +64,7 @@ const createMenu = () =>{
 }
 
 const destroyMenu = () => {
-    document.getElementById("menuContainer").remove();
+    document.getElementById("zwojatorContainer").remove();
     isMenuOnScreen = false;
 }
 
@@ -155,7 +155,7 @@ const returnList = (teleportList) => {
 }
 
 const search = () => {
-    const searchInput = document.querySelector("#menuContainer .search");
+    const searchInput = document.querySelector("#zwojatorContainer .search");
     const itemList = document.querySelectorAll("#zwojator-container > div:not(.search-wrapper)");
 
     searchInput.oninput = () => {const filter = searchInput.value.toLowerCase();

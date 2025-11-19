@@ -1,12 +1,7 @@
+const audioSrc = localStorage.getItem("sound") || "https://cdn.freesound.org/previews/758/758966_14213757-lq.mp3";
+
 window.pegasusInit = function() {
 
-    const keywords = ["lambo",
-                  "sopel",
-                  "sopla",
-                  "amaimon"
-                 ];
-
-    const audioSrc = localStorage.getItem("sound") || "https://cdn.freesound.org/previews/758/758966_14213757-lq.mp3";
     let observer;
 
     const requestNotificationPermission = () => {
@@ -27,6 +22,7 @@ window.pegasusInit = function() {
     }
 
     const messageCheck = (message, messageContainer, wasSoundPlayed) => {
+        const keywords = localStorage.getItem("keywords").split(",");
         for (let keyword of keywords){
             if (message.toLowerCase().includes(keyword.toLowerCase())){
                 messageContainer.style.backgroundColor = "rgba(100,255,255,0.2)";
@@ -90,22 +86,63 @@ window.pegasusDesc = function(column) {
 window.pegasusConfig = function(column){
     column.querySelector("#addon-config").innerHTML = `
     <ul style="list-style: none">
-        <li><div class="checkbox-custom">
-            <input type="checkbox" id="tick-1">
+        <li style="display:flex; justify-content:space-between"><div class="checkbox-custom">
+            <input type="checkbox" id="tick-1" checked>
             <label for="tick-1" class="c-checkbox__label" style="color: #444">Dźwięk</label>
-        </div></li>
+        </div>
+            <div style="display:flex"><div class="button small green" id="upload-button" style="width:50%">
+                <div class="background"></div>
+                <div class="label" style="text-align: center">⬆</div>
+            </div><div class="button small green" id="play-button" style="width:50%">
+                <div class="background"></div>
+                <div class="label" style="text-align: center">▶</div>
+            </div></div></li>
         <li><div class="checkbox-custom">
-            <input type="checkbox" id="tick-2">
+            <input type="checkbox" id="tick-2" checked>
             <label for="tick-2" class="c-checkbox__label" style="color: #444">Powiadomienia</label>
         </div></li>
         <li><div class="checkbox-custom">
-            <input type="checkbox" id="tick-3">
+            <input type="checkbox" id="tick-3" checked>
             <label for="tick-3" class="c-checkbox__label" style="color: #444">Podświetlenie</label>
-        </div></li>
-        <li><div class="checkbox-custom">
-            <input type="checkbox" id="tick-4">
-            <label for="tick-4" class="c-checkbox__label" style="color: #444">Słownik</label>
-        </div></li>
+        </div></li><br />
+        <li style="display:flex"><div class="button small green" id="add-button"style="width:33%">
+                <div class="background"></div>
+                <div class="label" style="text-align: center">Dodaj</div>
+            </div><div class="button small green" id="remove-button" style="width:33%">
+                <div class="background"></div>
+                <div class="label" style="text-align: center">Usuń</div>
+            </div><div class="button small green" id="show-button" style="width:33%">
+                <div class="background"></div>
+                <div class="label" style="text-align: center">Wyświetl</div>
+            </div>
+        </li>
     </ul>
     `;
-}
+
+   column.querySelector("#upload-button").onclick = () => {
+        const uploadPrompt = prompt("Wprowadź URL do nowego dźwięku.");
+        if (uploadPrompt == null || uploadPrompt == "") localStorage.removeItem("sound");
+        else localStorage.setItem("sound",uploadPrompt);
+    };
+    column.querySelector("#play-button").onclick = () => {new Audio(audioSrc).play();};
+
+    column.querySelector("#add-button").onclick = () => {
+        const addWordsPrompt = prompt("Wprowadź słowa do dodania (oddzielone przecinkiem)");
+        let keywords = localStorage.getItem("keywords");
+        keywords = keywords ? keywords.split(",") : [];
+        keywords.push(addWordsPrompt);
+        localStorage.setItem("keywords",keywords);
+    };
+
+    column.querySelector("#remove-button").onclick = () => {
+        const rmWordsPrompt = prompt("Wprowadź słowa do usunięcia (oddzielone przecinkiem)");
+        let keywords = localStorage.getItem("keywords");
+        keywords.replace(/rmWordsPrompt/g, "");
+        localStorage.setItem("keywords",keywords);
+    };
+
+    column.querySelector("#show-button").onclick = () => {
+        column.querySelector(".description-label").textContent = "Słownik:";
+        column.querySelector("#addon-desc").textContent = localStorage.getItem("keywords");
+    };
+};

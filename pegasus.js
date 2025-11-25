@@ -4,6 +4,12 @@ window.pegasusInit = function() {
 
     let observer;
 
+    const getKeywords = () => {
+        const words = localStorage.getItem("keywords");
+        if (!words) return [];
+        return words.split(",").map(k => k.trim()).filter(k => k.length > 0);
+    }
+
     const requestNotificationPermission = () => {
         if (Notification.permission !== "granted") Notification.requestPermission();
     }
@@ -22,7 +28,9 @@ window.pegasusInit = function() {
     }
 
     const messageCheck = (message, messageContainer, wasSoundPlayed) => {
-        const keywords = localStorage.getItem("keywords").split(",");
+        if (!message) return false;
+
+        const keywords = getKeywords();
         for (let keyword of keywords){
             if (message.toLowerCase().includes(keyword.toLowerCase())){
                 messageContainer.style.backgroundColor = "rgba(100,255,255,0.2)";
@@ -61,12 +69,12 @@ window.pegasusInit = function() {
 
         if (localStorage.getItem("Pegasus") === "ON") {
             observer.observe(target, config);
-            console.log("Obserwuje...");
+            console.log("Pegasus - obserwuje...");
             chatCheck();
         }
         else {
             observer.disconnect();
-            console.log("Rozłączono...");
+            console.log("Pegasus - rozłączono...");
         }
     }
 
@@ -135,10 +143,8 @@ window.pegasusConfig = function(column){
     };
 
     column.querySelector("#remove-button").onclick = () => {
-        const rmWordsPrompt = prompt("Wprowadź słowa do usunięcia (oddzielone przecinkiem)");
-        let keywords = localStorage.getItem("keywords");
-        keywords.replace(/rmWordsPrompt/g, "");
-        localStorage.setItem("keywords",keywords);
+        //const rmWordsPrompt = prompt("Wprowadź słowa do usunięcia (oddzielone przecinkiem)");
+        
     };
 
     column.querySelector("#show-button").onclick = () => {

@@ -1,5 +1,11 @@
 window.zwojatorInit = function() {
 
+document.addEventListener("keydown", function(event) {
+    if (event.code === "Numpad0") {
+        isMenuOnScreen ? destroyMenu() : createMenu();
+    }
+});
+
 let isMenuOnScreen = false;
 
 const createButton = () => {
@@ -176,7 +182,7 @@ const search = () => {
 window.zwojatorDesc = function(column) {
     column.querySelector("#addon-desc").innerHTML = `
         Wszystkie teleporty z ekwipunku w jednym menu.<br />
-        Przypisany klawisz ->
+        Przypisany klawisz -> Numpad0
     `;
 }
 

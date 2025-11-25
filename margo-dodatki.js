@@ -10,8 +10,8 @@
 // ==/UserScript==
 
 const scripts = [
-    {name: "Pegasus", icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", script: "http://localhost:8000/pegasus.js"}, //https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/pegasus.js
-    {name: "Zwojator", icon: "https://micc.garmory-cdn.cloud/obrazki/itemy/pap/zw_kwieciste.gif", script: "http://localhost:8000/zwojator.js"} //https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/zwojator.js
+    {name: "Pegasus", icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/pegasus.js"}, 
+    {name: "Zwojator", icon: "https://micc.garmory-cdn.cloud/obrazki/itemy/pap/zw_kwieciste.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/zwojator.js"}
 ];
 
 const menuIcon = "https://micc.garmory-cdn.cloud/obrazki/itemy/eve/g24-aniolek-c2.gif";

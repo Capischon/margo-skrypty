@@ -9,14 +9,17 @@ document.addEventListener("keydown", function(event) {
 let isMenuOnScreen = false;
 
 const createButton = () => {
-    const widgetButton = document.createElement("div");widgetButton.className = "widget-button blink-violet";
-    const topLeftWidgetBar = document.querySelector(".top-left.main-buttons-container.ui-droppable.static-widget-position");
-    const widgetCount = topLeftWidgetBar.querySelectorAll(".widget-in-interface-bar").length;
+    const widgetButton = document.createElement("div");
+    widgetButton.className = "widget-button blink-violet";
+
+    const widgetAnchor = document.querySelector(".bags-navigation.ui-droppable");
+    const anchorPosition = widgetAnchor.getBoundingClientRect();
+    const anchorWidth = anchorPosition.width;
 
     Object.assign(widgetButton.style, {
          width: "44px",
         height: "44px",
-        left: `${widgetCount*44}px`,
+        right: `${anchorWidth}px`,
         position: "absolute",
         display: "flex",
         justifyContent: "center",
@@ -26,7 +29,7 @@ const createButton = () => {
     widgetButton.innerHTML = `<img src="https://micc.garmory-cdn.cloud/obrazki/itemy/pap/zw_kwieciste.gif" style="max-height: 80%;">`;
     widgetButton.onclick = () => isMenuOnScreen ? destroyMenu() : createMenu();
 
-    document.querySelector(".top-left.main-buttons-container.ui-droppable.static-widget-position").appendChild(widgetButton);
+    document.querySelector(".bags-navigation.ui-droppable").appendChild(widgetButton);
 }
 
 const createMenu = () =>{

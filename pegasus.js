@@ -4,84 +4,84 @@ window.pegasusInit = function() {
 
     let observer;
 
-    const getKeywords = () => {
-        const words = localStorage.getItem("keywords");
-        if (!words) return [];
-        return words.split(",").map(k => k.trim()).filter(k => k.length > 0);
-    }
+const getKeywords = () => {
+    const words = localStorage.getItem("keywords");
+    if (!words) return [];
+    return words.split(",").map(k => k.trim()).filter(k => k.length > 0);
+}
 
-    const requestNotificationPermission = () => {
-        if (Notification.permission !== "granted") Notification.requestPermission();
-    }
+const requestNotificationPermission = () => {
+    if (Notification.permission !== "granted") Notification.requestPermission();
+}
 
-    const chatCheck = () => {
-        const chat = document.querySelector(".one-message-wrapper.active").children;
-        let wasSoundPlayed = false;
+const chatCheck = () => {
+    const chat = document.querySelector(".one-message-wrapper.active").children;
+    let wasSoundPlayed = false;
 
-        for (let i = chat.length-1; i>=0; i--){
-            const messageContainer = chat[i];
-            const message = messageContainer.querySelector(".message-section")?.textContent;
-            const soundPlayed = messageCheck(message, messageContainer, !wasSoundPlayed);
+    for (let i = chat.length-1; i>=0; i--){
+        const messageContainer = chat[i];
+        const message = messageContainer.querySelector(".message-section")?.textContent;
+        const soundPlayed = messageCheck(message, messageContainer, !wasSoundPlayed);
 
-            if (soundPlayed && !wasSoundPlayed) wasSoundPlayed = true;
+        if (soundPlayed && !wasSoundPlayed) wasSoundPlayed = true;
+        }
+}
+
+const messageCheck = (message, messageContainer, wasSoundPlayed) => {
+    if (!message) return false;
+
+    const keywords = getKeywords();
+    for (let keyword of keywords){
+        if (message.toLowerCase().includes(keyword.toLowerCase())){
+            messageContainer.style.backgroundColor = "rgba(100,255,255,0.2)";
+            if (wasSoundPlayed) soundAlert(message);
+            return true;
         }
     }
-
-    const messageCheck = (message, messageContainer, wasSoundPlayed) => {
-        if (!message) return false;
-
-        const keywords = getKeywords();
-        for (let keyword of keywords){
-            if (message.toLowerCase().includes(keyword.toLowerCase())){
-                messageContainer.style.backgroundColor = "rgba(100,255,255,0.2)";
-                if (wasSoundPlayed) soundAlert(message);
-                return true;
-            }
-        }
     return false;
 }
 
-    const soundAlert = (message) => {
-        const notificationSound = new Audio(audioSrc);
-        notificationSound.volume = 0.4;
-        notificationSound.play();
-        if (Notification.permission === "granted" && document.hidden) {
-            new Notification("Nowa wiadomość!", {icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", body: `${message}`});
-        }
+const soundAlert = (message) => {
+    const notificationSound = new Audio(audioSrc);
+    notificationSound.volume = 0.4;
+    notificationSound.play();
+    if (Notification.permission === "granted" && document.hidden) {
+         new Notification("Nowa wiadomość!", {icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", body: `${message}`});
     }
+}
     
-    const pegasus = () => {
-        const target = document.querySelector(".one-message-wrapper.active");
-        if (!target) return;
+const pegasus = () => {
+    const target = document.querySelector(".one-message-wrapper.active");
+    if (!target) return;
 
-        const config = { childList: true };
+    const config = { childList: true };
 
-        if (observer instanceof MutationObserver) observer.disconnect();
+    if (observer instanceof MutationObserver) observer.disconnect();
 
-        observer = new MutationObserver((mutationList) => {
-            for (const mutation of mutationList) {
-                for (const addedNode of mutation.addedNodes) {
-                    const message = addedNode.querySelector(".message-section").textContent;
-                    messageCheck(message, addedNode, true);
-                }
+    observer = new MutationObserver((mutationList) => {
+        for (const mutation of mutationList) {
+            for (const addedNode of mutation.addedNodes) {
+                const message = addedNode.querySelector(".message-section").textContent;
+                 messageCheck(message, addedNode, true);
             }
-        });
+        }
+    });
 
-        if (localStorage.getItem("Pegasus") === "ON") {
-            observer.observe(target, config);
-            console.log("Pegasus - obserwuje...");
-            chatCheck();
-        }
-        else {
-            observer.disconnect();
-            console.log("Pegasus - rozłączono...");
-        }
+    if (localStorage.getItem("Pegasus") === "ON") {
+        observer.observe(target, config);
+        console.log("Pegasus - obserwuje...");
+        chatCheck();
     }
+    else {
+        observer.disconnect();
+        console.log("Pegasus - rozłączono...");
+    }
+}
 
-    requestNotificationPermission();
-    pegasus();
+requestNotificationPermission();
+pegasus();
 
-    window.pegasus = pegasus;
+window.pegasus = pegasus;
 };
 
 window.pegasusDesc = function(column) {
@@ -135,20 +135,35 @@ window.pegasusConfig = function(column){
     column.querySelector("#play-button").onclick = () => {new Audio(audioSrc).play();};
 
     column.querySelector("#add-button").onclick = () => {
-        const addWordsPrompt = prompt("Wprowadź słowa do dodania (oddzielone przecinkiem)");
+        const addWordsPrompt = prompt("Wprowadź słowa do dodania (oddzielone przecinkiem lub spacją)");
         let keywords = localStorage.getItem("keywords");
         keywords = keywords ? keywords.split(",") : [];
         keywords.push(addWordsPrompt);
         localStorage.setItem("keywords",keywords);
+        dictionaryCheck();
     };
 
     column.querySelector("#remove-button").onclick = () => {
+        dictionaryCheck();
         //const rmWordsPrompt = prompt("Wprowadź słowa do usunięcia (oddzielone przecinkiem)");
         
     };
 
     column.querySelector("#show-button").onclick = () => {
+        dictionaryCheck();
         column.querySelector(".description-label").textContent = "Słownik:";
         column.querySelector("#addon-desc").textContent = localStorage.getItem("keywords");
+    };
+
+    const dictionaryCheck = () => {
+        let keywords = localStorage.getItem("keywords");
+        if (!keywords) return;
+
+        keywords = keywords
+            .split(/[,\s]+/)
+            .map(w => w.trim())
+            .filter(w => w.length > 0);
+
+        localStorage.setItem("keywords", keywords.join(","));
     };
 };

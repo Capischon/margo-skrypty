@@ -10,8 +10,8 @@
 // ==/UserScript==
 
 const scripts = [
-    {name: "Pegasus", icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", script: "C:/Users/nwn/Desktop/xdlol/pegasus.js"},
-    {name: "Zwojator", icon: "https://micc.garmory-cdn.cloud/obrazki/itemy/pap/zw_kwieciste.gif", script: "C:/Users/nwn/Desktop/xdlol/zwojator.js"}
+    {name: "Pegasus", icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/pegasus.js"}, 
+    {name: "Zwojator", icon: "https://micc.garmory-cdn.cloud/obrazki/itemy/pap/zw_kwieciste.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/zwojator.js"}
 ];
 
 const menuIcon = "https://micc.garmory-cdn.cloud/obrazki/itemy/eve/g24-aniolek-c2.gif";
@@ -68,7 +68,7 @@ function createMenu(){
             </div>
 
             <div class="content">
-                <div class="innter-content">
+                <div class="inner-content">
                     <div class="addons-panel">
                         <div class="left-column">
                             <div class="interface-element-middle-3-background-stretch"></div>
@@ -98,16 +98,16 @@ function createMenu(){
                                 </div>
                             </div>
                             <div class="right-scroll scroll-wrapper classic-bar">
-                                <div class="scroll-pane">
-                                    <div class="one-addon-description" style="display: block;">
+                                <div class="scroll-pane" style="overflow-y: auto; overflow-x: hidden">
+                                    <div class="one-addon-description" style="display: hide;">
                                         <div class="on-off-button">
-                                            <div class="button green small">
+                                            <div class="button small green" id="on-off">
                                                 <div class="background"></div>
-                                                <div class="label"> OMG </div>
+                                                <div class="label">Aktywuj</div>
                                             </div>
                                         </div>
                                         <div class="description-label">Opis: </div>
-                                        <div class="description-text" id="addon-desc"></div>
+                                        <div class="description-text" id="addon-desc"></div><br />
                                         <div class="description-label">Konfiguracja: </div>
                                         <div class="description-text" id="addon-config"></div>
                                     </div>
@@ -117,7 +117,6 @@ function createMenu(){
                     </div>
                 </div>
             </div>
-
         </div>`;
 
     isMenuOnScreen = true;
@@ -136,9 +135,10 @@ function createWidgetElement(script){
     const element = document.createElement("div");
     element.className = "one-addon-on-list";
     document.querySelector("#addons").appendChild(element);
+    const buttonColor = localStorage.getItem(script.name) === "ON" ? "green" : "red";
     element.innerHTML = `
             <div class="img-wrapper">
-                <div class="widget-button no-hover violet">
+                <div class="widget-button no-hover ${buttonColor}">
                     <div class="addon-img icon" style="background: url(${script.icon}); max-height: 80%;"></div>
                 </div>
             </div>
@@ -146,21 +146,60 @@ function createWidgetElement(script){
                 <div class="addon-title">${script.name}</div>
             </div>
     `;
-    element.onclick = () => loadWidgetDesc(script);
+    element.onclick = () => loadRightColumn(script);
 }
 
 function loadScripts(){
-    scripts.forEach(({script}) => {
+    scripts.forEach(({name, script}) => {
         const s = document.createElement("script");
         s.src = script;
         s.type = "text/javascript";
         s.async = false;
+        s.onload = () => {
+            if (localStorage.getItem(name) === "ON") {
+                window[`${name.toLowerCase()}Init`]();
+            }
+        };
         document.body.appendChild(s);
     });
 }
 
-function loadWidgetDesc(script){
+function loadRightColumn(script){
     const column = document.querySelector("#widget-desc");
     column.querySelector(".addon-header-title").innerText = `${script.name}`;
     column.querySelector(".addon-header-img.icon").style.background = `url(${script.icon})`;
+    column.querySelector(".one-addon-description").style.display = "block";
+    column.querySelector(".scroll-pane").style.background = "none";
+
+    const isActivated = localStorage.getItem(script.name) || "OFF";
+    const onOffButton = column.querySelector("#on-off");
+    onOffButton.className = `button small ${isActivated === "ON" ? "green" : "red"}`;
+    onOffButton.querySelector(".label").innerText = isActivated === "ON" ? "Dezaktywuj" : "Aktywuj";
+
+    onOffButton.onclick = () => {
+        const isActivated = localStorage.getItem(script.name) || "OFF";
+        onOffSwitch(script,onOffButton,isActivated);
+    }
+
+    const descFunc = window[`${script.name.toLowerCase()}Desc`];
+    if (typeof descFunc === "function") descFunc(column);
+    else column.querySelector("#addon-desc").innerText = "Brak opisu";
+
+    const configFunc = window[`${script.name.toLowerCase()}Config`];
+    if (typeof configFunc === "function") configFunc(column);
+    else column.querySelector("#addon-config").innerText = "Brak opisu";
+
+}
+
+function onOffSwitch(script,button,isActivated){
+    if(isActivated === "ON") {
+        localStorage.setItem(script.name,"OFF");
+        button.className = "button small red";
+        button.querySelector(".label").innerText = "Aktywuj";
+    }
+    else {
+        localStorage.setItem(script.name,"ON");
+        button.className = "button small green";
+        button.querySelector(".label").innerText = "Dezaktywuj";
+    }
 }

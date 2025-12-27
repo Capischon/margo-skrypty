@@ -7,8 +7,8 @@
 // @match        https://*.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
 // @grant        none
-// @updateURL    https://raw.githack.com/TwojUser/TwojRepo/main/margonem-dodatki.user.js
-// @downloadURL  https://raw.githack.com/TwojUser/TwojRepo/main/margonem-dodatki.user.js
+// @updateURL    https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/margo-dodatki.js
+// @downloadURL  https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/margo-dodatki.js
 // ==/UserScript==
 
 const scripts = [

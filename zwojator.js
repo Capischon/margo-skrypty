@@ -1,7 +1,11 @@
+const ZWOJATOR_KEY_STORAGE = "zwojatorHotkey";
+let zwojatorHotkey = localStorage.getItem(ZWOJATOR_KEY_STORAGE) || "Numpad0";
+    
 window.zwojatorInit = function() {
 
 document.addEventListener("keydown", function(event) {
-    if (event.code === "Numpad0") {
+    if (event.code === zwojatorHotkey) {
+        event.preventDefault();
         isMenuOnScreen ? destroyMenu() : createMenu();
     }
 });
@@ -17,7 +21,7 @@ const createButton = () => {
     const anchorWidth = anchorPosition.width;
 
     Object.assign(widgetButton.style, {
-         width: "44px",
+        width: "44px",
         height: "44px",
         right: `${anchorWidth}px`,
         position: "absolute",
@@ -182,13 +186,47 @@ const search = () => {
     createButton();
 }
 
-window.zwojatorDesc = function(column) {
-    column.querySelector("#addon-desc").innerHTML = `
+function updateZwojatorDesc() {
+    const desc = document.querySelector("#addon-desc");
+    if (!desc) return;
+
+    desc.innerHTML = `
         Wszystkie teleporty z ekwipunku w jednym menu.<br />
-        Przypisany klawisz -> Numpad0
+        Przypisany klawisz -> <b>${zwojatorHotkey}</b>
     `;
 }
 
+window.zwojatorDesc = function() {
+    updateZwojatorDesc();
+}
+
 window.zwojatorConfig = function(column) {
-    column.querySelector("#addon-config").innerHTML = ``;
+    column.querySelector("#addon-config").innerHTML = `<br />
+    <div class="button small green" id="shortcut-button">
+        <div class="background"></div>
+        <div class="label" style="text-align: center">Ustaw nowy skrót</div>
+    </div>
+    <div id="hotkey-display"></div>
+    `;
+
+    const btn = column.querySelector("#shortcut-button");
+    const display = column.querySelector("#hotkey-display");
+
+    btn.onclick = () => {
+        display.textContent = "Naciśnij klawisz...";
+
+        const listener = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            zwojatorHotkey = e.code;
+            localStorage.setItem(ZWOJATOR_KEY_STORAGE, zwojatorHotkey);
+
+            display.textContent = null;
+            updateZwojatorDesc();
+            document.removeEventListener("keydown", listener, true);
+        };
+
+        document.addEventListener("keydown", listener, true);
+    };
 }

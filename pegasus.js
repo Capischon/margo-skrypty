@@ -5,9 +5,9 @@ window.pegasusInit = function() {
     let observer;
 
 const getKeywords = () => {
-    const words = localStorage.getItem("keywords");
-    if (!words) return [];
-    return words.split(",").map(k => k.trim()).filter(k => k.length > 0);
+    const PEGASUS_KEY_STORAGE = localStorage.getItem("keywords");
+    if (!PEGASUS_KEY_STORAGE) return [];
+    return PEGASUS_KEY_STORAGE.split(",").map(k => k.trim()).filter(k => k.length > 0);
 }
 
 const requestNotificationPermission = () => {

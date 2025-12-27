@@ -7,14 +7,16 @@
 // @match        https://*.margonem.pl/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=margonem.pl
 // @grant        none
+// @updateURL    https://raw.githack.com/TwojUser/TwojRepo/main/margonem-dodatki.user.js
+// @downloadURL  https://raw.githack.com/TwojUser/TwojRepo/main/margonem-dodatki.user.js
 // ==/UserScript==
 
 const scripts = [
-    {name: "Pegasus", icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/pegasus.js"}, 
+    {name: "Pegasus", icon: "https://micc.garmory-cdn.cloud/obrazki/npc/mez/npc275.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/pegasus.js"},
     {name: "Zwojator", icon: "https://micc.garmory-cdn.cloud/obrazki/itemy/pap/zw_kwieciste.gif", script: "https://raw.githack.com/Capischon/margo-skrypty/refs/heads/main/zwojator.js"}
 ];
 
-const menuIcon = "https://micc.garmory-cdn.cloud/obrazki/itemy/eve/g24-aniolek-c2.gif";
+const menuIcon = "https://micc.garmory-cdn.cloud/obrazki/npc/kob/thu-guarina.gif";
 
 const delay = (time) => new Promise(resolve => setTimeout(resolve, time * 1000));
 let isMenuOnScreen = false;
@@ -28,24 +30,17 @@ let isMenuOnScreen = false;
 
 function createButton(){
     const widgetButton = document.createElement("div");
-    const topLeftWidgetBar = document.querySelector(".top-left.main-buttons-container.ui-droppable.static-widget-position");
-    const widgetCount = topLeftWidgetBar.querySelectorAll(".widget-in-interface-bar").length;
+    const widgetAppend = document.querySelector(".hud-container");
 
-    widgetButton.className = "widget-button violet widget-in-interface-bar";
     Object.assign(widgetButton.style, {
-        width: "44px",
-        height: "44px",
-        left: `${widgetCount*44}px`,
-        position: "absolute",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
+        width: "32px",
+        height: "48px",
     });
 
-    widgetButton.innerHTML = `<img src="${menuIcon}" style="max-height: 80%;">`;
+    widgetButton.innerHTML = `<img src="${menuIcon}" style="max-height: 100%;">`;
     widgetButton.onclick = () => isMenuOnScreen ? destroyMenu() : createMenu();
 
-    topLeftWidgetBar.appendChild(widgetButton);
+    widgetAppend.appendChild(widgetButton);
 }
 
 function destroyMenu(){
@@ -129,6 +124,12 @@ function createMenu(){
     menuContainer.querySelector(".close-button").onclick = destroyMenu;
 
     scripts.forEach((script) => createWidgetElement(script));
+
+    Object.assign(document.querySelector("#addon-desc").style, {
+        whiteSpace: "normal",
+        wordBreak: "normal",
+        overflowWrap: "break-word"
+    });
 }
 
 function createWidgetElement(script){
